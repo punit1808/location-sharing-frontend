@@ -24,6 +24,8 @@ export default function App() {
   const [location, setLocation] = useState({ lat: null, lon: null });
 
   useEffect(() => {
+    if(!token) return;
+
     if ("geolocation" in navigator) {
       const watchId = navigator.geolocation.watchPosition(
         (position) => {
@@ -59,7 +61,7 @@ export default function App() {
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
-  }, []);
+  }, [token]);
 
   // Handle login/register success
   const handleAuth = async (data) => {
@@ -210,6 +212,7 @@ export default function App() {
   const handleLogout = () => {
     setUser(null);
     setGroups([]);
+    setToken(null);
     setSelectedGroup(null);
     setGroupDetails(null);
   };
