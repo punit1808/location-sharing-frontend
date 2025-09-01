@@ -45,6 +45,8 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .tabButtons button {
@@ -55,6 +57,8 @@
   cursor: pointer;
   font-size: 1rem;
   color: #374151;
+  flex: 1;
+  min-width: 120px;
 }
 
 .tabButtons button:hover {
@@ -161,4 +165,70 @@
   color: red;
   font-size: 14px;
   margin-bottom: 10px;
+}
+
+/* ----------- Responsive Styles ----------- */
+
+/* Tablets & below */
+@media (max-width: 1024px) {
+  .authContainer {
+    flex-direction: column;
+  }
+
+  .leftPane, 
+  .rightPane {
+    flex: unset;
+    width: 100%;
+    min-height: 50vh;
+    padding: 2rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .leftPane h1 {
+    font-size: 1.8rem;
+  }
+
+  .leftPane p {
+    font-size: 1rem;
+    max-width: none;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 600px) {
+  .leftPane {
+    padding: 1.5rem;
+  }
+
+  .leftPane h1 {
+    font-size: 1.5rem;
+  }
+
+  .leftPane p {
+    font-size: 0.95rem;
+  }
+
+  .rightPane {
+    padding: 2rem 1rem;
+  }
+
+  .form {
+    max-width: 100%;
+    gap: 0.75rem;
+  }
+
+  .input, .loginBtn {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .tabButtons {
+    gap: 0.5rem;
+  }
+
+  .tabButtons button {
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+  }
 }
