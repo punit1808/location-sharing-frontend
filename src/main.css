@@ -1,4 +1,11 @@
-.main{
-    margin: 0;
-    padding: 0;
+.main {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Global Responsive Defaults */
+* {
+  box-sizing: inherit;
 }

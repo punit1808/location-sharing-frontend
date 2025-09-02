@@ -142,3 +142,18 @@
 }
 
 
+@media (max-width: 600px) {
+  .modal {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .heading {
+    font-size: 1rem;
+  }
+
+  .input {
+    font-size: 0.9rem;
+  }
+}
+

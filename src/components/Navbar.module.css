@@ -41,3 +41,28 @@
   background-color: #4338ca;
   color: white;
 }
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .brand {
+    font-size: 1.25rem;
+  }
+
+  .logoutBtn {
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .userSection {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

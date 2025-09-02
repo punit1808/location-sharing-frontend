@@ -232,3 +232,49 @@
     padding: 0.4rem 1rem;
   }
 }
+
+/* Tablets & below */
+@media (max-width: 1024px) {
+  .authContainer {
+    flex-direction: column;
+  }
+
+  .leftPane, 
+  .rightPane {
+    width: 100%;
+    min-height: 50vh;
+    padding: 2rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .leftPane h1 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 600px) {
+  .authContainer {
+    min-height: auto;
+  }
+
+  .leftPane {
+    padding: 1.25rem;
+  }
+
+  .rightPane {
+    padding: 1.5rem 1rem;
+  }
+
+  .form {
+    max-width: 100%;
+    gap: 0.75rem;
+  }
+
+  .input, .loginBtn {
+    font-size: 0.9rem;
+    padding: 0.65rem;
+  }
+}
+

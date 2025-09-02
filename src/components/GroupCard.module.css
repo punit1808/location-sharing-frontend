@@ -23,3 +23,31 @@
   font-size: 14px;
   line-height: 1;
 }
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .sidebar {
+    padding: 0.75rem;
+  }
+
+  .addBtn {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+

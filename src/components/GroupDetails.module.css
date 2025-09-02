@@ -165,3 +165,20 @@
   background: #d1d5db;
 }
 
+@media (max-width: 768px) {
+  .card {
+    padding: 0.75rem;
+  }
+
+  .removeBtn {
+    font-size: 12px;
+    padding: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    margin-right: 0;
+  }
+}
+
