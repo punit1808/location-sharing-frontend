@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GroupCard from "./GroupCard";
 import styles from "./Dashboard.module.css";
 
-export default function Dashboard({ groups, onSelect, handleDeleteGroup, onAdd, loadingRemove }) {
+export default function Dashboard({ groups, handleFetch, onSelect, handleDeleteGroup, onAdd, loadingRemove }) {
+  useEffect(()=>{
+    if(groups.length===0) handleFetch();
+  },[]);
+
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Your Groups</h2>

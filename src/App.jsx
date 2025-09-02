@@ -68,21 +68,6 @@ export default function App() {
     const username = data?.username || data?.email || "guest";
     setUser({ username });
     setToken(data.token);
-
-    // Fetch groups after login
-    setLoadingGroups(true);
-    try {
-      const res = await axios.get(`${BACKEND_URL}/group/${username}` ,{ 
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-       });
-      setGroups(res.data || []);
-    } catch (err) {
-      console.error("Failed to fetch groups:", err);
-    } finally {
-      setLoadingGroups(false);
-    }
   };
 
   const handleSelect = async (group) => {
@@ -118,6 +103,25 @@ export default function App() {
     setLoadingGroupDetails(false);
   }
 };
+
+ const handleFetch = async () => {
+
+  // Fetch groups after login
+    setLoadingGroups(true);
+    try {
+      const res = await axios.get(`${BACKEND_URL}/group/${user.username}` ,{ 
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+       });
+      setGroups(res.data || []);
+    } catch (err) {
+      console.error("Failed to fetch groups:", err);
+    } finally {
+      setLoadingGroups(false);
+    }
+
+ }
 
 
   const handleAddGroup = async (name) => {
@@ -258,6 +262,7 @@ export default function App() {
       ) : (
         <Dashboard
           groups={groups}
+          handleFetch={handleFetch}
           onSelect={handleSelect}
           handleDeleteGroup={handleDeleteGroup}
           onAdd={() => setShowAddGroup(true)}
