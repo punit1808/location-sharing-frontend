@@ -3,12 +3,6 @@ import GroupCard from "./GroupCard";
 import styles from "./Dashboard.module.css";
 
 export default function Dashboard({ groups, handleFetch, onSelect, handleDeleteGroup, onAdd, loadingRemove }) {
-  const [fetchDone,setFetchDone] =useState(false);
-
-  useEffect(()=>{
-    if(groups.length===0 && !fetchDone) handleFetch();
-    setFetchDone(true);
-  },[]);
 
   return (
     <div className={styles.container}>
