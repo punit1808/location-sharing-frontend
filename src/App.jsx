@@ -24,6 +24,13 @@ export default function App() {
   const [location, setLocation] = useState({ lat: null, lon: null });
 
   useEffect(() => {
+    if (user && token) {
+      handleFetch();
+    }
+  }, [user, token]); 
+
+
+  useEffect(() => {
     if(!token) return;
 
     if ("geolocation" in navigator) {
