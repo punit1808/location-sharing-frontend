@@ -15,7 +15,7 @@ const isValidLatLng = (lat, lng) =>
   lng <= 180;
 
 // ✅ Animated Marker component
-function AnimatedMarker({ member, icon }) {
+function AnimatedMarker({ member, icon, onOutOfBounds }) {
   const map = useMap();
   const markerRef = useRef(null);
 
@@ -74,20 +74,43 @@ function AnimatedMarker({ member, icon }) {
        }`
     );
 
-    // ✅ If marker goes out of bounds → pan map
+    // ✅ Check if marker is outside current bounds
     if (!map.getBounds().contains(targetPos)) {
-      map.flyTo(targetPos, map.getZoom(), {
-        animate: true,
-        duration: 1.5,
-      });
+      onOutOfBounds(targetPos); // tell parent
     }
-  }, [member, map, icon]);
+  }, [member, map, icon, onOutOfBounds]);
 
   return null; // Leaflet manages the DOM
 }
 
+// ✅ Fit all members into view initially, and later only when needed
+function FitBoundsController({ members }) {
+  const map = useMap();
+  const initializedRef = useRef(false);
+
+  useEffect(() => {
+    if (!members.length) return;
+
+    const bounds = [];
+    members.forEach((m) => {
+      if (isValidLatLng(m.lat, m.lng)) {
+        bounds.push([m.lat, m.lng]);
+      }
+    });
+
+    if (bounds.length > 0 && !initializedRef.current) {
+      // Fit once initially
+      map.fitBounds(bounds, { padding: [50, 50] });
+      initializedRef.current = true;
+    }
+  }, [members, map]);
+
+  return null;
+}
+
 export default function MapView({ members }) {
   const defaultCenter = [28.61, 77.2]; // Delhi fallback
+  const mapRef = useRef(null);
 
   const customIcon = L.icon({
     iconUrl: locationMarker,
@@ -95,16 +118,40 @@ export default function MapView({ members }) {
     iconAnchor: [15, 30],
   });
 
+  const handleOutOfBounds = (pos) => {
+    if (mapRef.current) {
+      mapRef.current.flyTo(pos, mapRef.current.getZoom(), {
+        animate: true,
+        duration: 1.5,
+      });
+    }
+  };
+
   return (
-    <MapContainer center={defaultCenter} zoom={5} className={styles.map}>
+    <MapContainer
+      center={defaultCenter}
+      zoom={5}
+      className={styles.map}
+      whenCreated={(mapInstance) => {
+        mapRef.current = mapInstance;
+      }}
+    >
       <TileLayer
         attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
+      {/* Fit all members initially */}
+      <FitBoundsController members={members} />
+
       {/* One AnimatedMarker per member */}
       {members.map((m, i) => (
-        <AnimatedMarker key={m.name || i} member={m} icon={customIcon} />
+        <AnimatedMarker
+          key={m.name || i}
+          member={m}
+          icon={customIcon}
+          onOutOfBounds={handleOutOfBounds}
+        />
       ))}
     </MapContainer>
   );
