@@ -1,19 +1,3 @@
-import React, { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import styles from "./MapView.module.css";
-import locationMarker from "../assets/marker.svg"; // custom marker icon
-
-// ✅ Helper: validate coordinates
-const isValidLatLng = (lat, lng) =>
-  typeof lat === "number" &&
-  typeof lng === "number" &&
-  lat >= -90 &&
-  lat <= 90 &&
-  lng >= -180 &&
-  lng <= 180;
-
 // ✅ Animated Marker component
 function AnimatedMarker({ member, icon }) {
   const map = useMap();
@@ -84,28 +68,4 @@ function AnimatedMarker({ member, icon }) {
   }, [member, map, icon]);
 
   return null; // Leaflet manages the DOM
-}
-
-export default function MapView({ members }) {
-  const defaultCenter = [28.61, 77.2]; // Delhi fallback
-
-  const customIcon = L.icon({
-    iconUrl: locationMarker,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-  });
-
-  return (
-    <MapContainer center={defaultCenter} zoom={5} className={styles.map}>
-      <TileLayer
-        attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-
-      {/* One AnimatedMarker per member */}
-      {members.map((m, i) => (
-        <AnimatedMarker key={m.name || i} member={m} icon={customIcon} />
-      ))}
-    </MapContainer>
-  );
 }
