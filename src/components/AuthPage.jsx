@@ -5,7 +5,7 @@ import styles from "./AuthPage.module.css";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function AuthPage({ onAuth }) {
-  const [activeTab, setActiveTab] = useState("login");
+  const [activeTab, setActiveTab] = useState("register");
   const [formData, setFormData] = useState({
     username: "",
     password: "",

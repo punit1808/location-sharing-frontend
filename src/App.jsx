@@ -75,6 +75,8 @@ export default function App() {
     const username = data?.username || data?.email || "guest";
     setUser({ username });
     setToken(data.token);
+    localStorage.setItem("AuthToken", data.token);
+    localStorage.setItem("User", username);
   };
 
   const handleSelect = async (group) => {
