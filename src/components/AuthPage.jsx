@@ -81,15 +81,18 @@ export default function AuthPage({ onAuth }) {
 
       {/* Right side form */}
       <div className={styles.rightPane}>
-        <div className={styles.tabButtons}>
+        <div className={`${styles.toggleWrapper} ${styles[activeTab]}`}>
+          <div className={styles.slider}></div>
+
           <button
-            className={activeTab === "login" ? styles.activeTab : ""}
+            className={activeTab === "login" ? styles.activeBtn : ""}
             onClick={() => setActiveTab("login")}
           >
             Login
           </button>
+
           <button
-            className={activeTab === "register" ? styles.activeTab : ""}
+            className={activeTab === "register" ? styles.activeBtn : ""}
             onClick={() => setActiveTab("register")}
           >
             Register
