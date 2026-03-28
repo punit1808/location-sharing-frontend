@@ -7,15 +7,23 @@
   font-family: sans-serif;
 }
 
-/* Left pane with gradient */
+/* Left pane with animated gradient */
 .leftPane {
   flex: 1;
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  background: linear-gradient(-45deg, #3b82f6, #6366f1, #8b5cf6, #06b6d4);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 4rem;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .leftPane h1 {
@@ -40,34 +48,73 @@
   padding: 3rem 2rem;
 }
 
-/* Tab buttons */
-.tabButtons {
+/* 🔥 TOGGLE WRAPPER */
+.toggleWrapper {
+  position: relative;
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.tabButtons button {
-  padding: 0.5rem 1.5rem;
-  border-radius: 9999px;
-  border: none;
+  width: 100%;
+  max-width: 350px;
   background: #f3f4f6;
-  cursor: pointer;
-  font-size: 1rem;
-  color: #374151;
+  border-radius: 30px;
+  padding: 4px;
+  margin-bottom: 2rem;
+}
+
+/* Toggle buttons */
+.toggleWrapper button {
   flex: 1;
-  min-width: 120px;
+  padding: 0.6rem;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.3s ease, opacity 0.3s ease, transform 0.2s ease;
 }
 
-.tabButtons button:hover {
-  background: #e5e7eb;
+.toggleWrapper button:hover {
+  transform: scale(1.05);
 }
 
-.activeTab {
+/* Slider */
+.slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
   background: linear-gradient(135deg, #6366f1, #3b82f6);
-  color: white !important;
+  border-radius: 30px;
+  transition: transform 0.35s ease;
+  box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+}
+
+/* 🔥 FIXED SLIDER MOVEMENT */
+.toggleWrapper.login .slider {
+  transform: translateX(0%);
+}
+
+.toggleWrapper.register .slider {
+  transform: translateX(100%);
+}
+
+/* 🔥 FIXED ACTIVE TEXT */
+.toggleWrapper.login button:first-child {
+  color: white;
+  opacity: 1;
+}
+
+.toggleWrapper.register button:last-child {
+  color: white;
+  opacity: 1;
+}
+
+/* Inactive button */
+.toggleWrapper.login button:last-child,
+.toggleWrapper.register button:first-child {
+  color: #6b7280;
+  opacity: 0.6;
 }
 
 /* Form styling */
@@ -79,36 +126,41 @@
   max-width: 350px;
 }
 
+/* Inputs */
 .input {
   padding: 0.75rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
   font-size: 1rem;
+  transition: all 0.25s ease;
 }
 
 .input:focus {
   border-color: #6366f1;
   outline: none;
+  transform: scale(1.02);
   box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
 }
 
+/* Button */
 .loginBtn {
   padding: 0.75rem;
-  background: #4f46e5;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: white;
   border: none;
   border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.25s ease;
 }
 
 .loginBtn:hover {
-  background: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(99,102,241,0.3);
 }
 
-/* Terms text */
+/* Terms */
 .terms {
   margin-top: 1rem;
   font-size: 0.8rem;
@@ -125,7 +177,7 @@
   text-decoration: underline;
 }
 
-/* Overlay when loading */
+/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -137,13 +189,13 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
   animation: fadeIn 0.3s ease-in-out;
 }
 
 .spinner {
   border: 4px solid #ddd;
-  border-top: 4px solid #007bff;
+  border-top: 4px solid #6366f1;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -160,86 +212,22 @@
   to { opacity: 1; }
 }
 
-/* Error message */
+/* Error */
 .error {
   color: red;
   font-size: 14px;
   margin-bottom: 10px;
 }
 
-/* ----------- Responsive Styles ----------- */
+/* -------- Responsive -------- */
 
-/* Tablets & below */
+/* Tablets */
 @media (max-width: 1024px) {
   .authContainer {
     flex-direction: column;
   }
 
-  .leftPane, 
-  .rightPane {
-    flex: unset;
-    width: 100%;
-    min-height: 50vh;
-    padding: 2rem;
-    text-align: center;
-    align-items: center;
-  }
-
-  .leftPane h1 {
-    font-size: 1.8rem;
-  }
-
-  .leftPane p {
-    font-size: 1rem;
-    max-width: none;
-  }
-}
-
-/* Mobile screens */
-@media (max-width: 600px) {
-  .leftPane {
-    padding: 1.5rem;
-  }
-
-  .leftPane h1 {
-    font-size: 1.5rem;
-  }
-
-  .leftPane p {
-    font-size: 0.95rem;
-  }
-
-  .rightPane {
-    padding: 2rem 1rem;
-  }
-
-  .form {
-    max-width: 100%;
-    gap: 0.75rem;
-  }
-
-  .input, .loginBtn {
-    font-size: 0.9rem;
-    padding: 0.6rem;
-  }
-
-  .tabButtons {
-    gap: 0.5rem;
-  }
-
-  .tabButtons button {
-    font-size: 0.9rem;
-    padding: 0.4rem 1rem;
-  }
-}
-
-/* Tablets & below */
-@media (max-width: 1024px) {
-  .authContainer {
-    flex-direction: column;
-  }
-
-  .leftPane, 
+  .leftPane,
   .rightPane {
     width: 100%;
     min-height: 50vh;
@@ -253,7 +241,7 @@
   }
 }
 
-/* Mobile screens */
+/* Mobile */
 @media (max-width: 600px) {
   .authContainer {
     min-height: auto;
@@ -272,9 +260,22 @@
     gap: 0.75rem;
   }
 
-  .input, .loginBtn {
+  .input,
+  .loginBtn {
     font-size: 0.9rem;
     padding: 0.65rem;
   }
 }
 
+.activeBtn {
+  color: white !important;
+  opacity: 1;
+}
+
+.toggleWrapper button {
+  opacity: 1;
+}
+
+.activeBtn {
+  opacity: 1;
+}
