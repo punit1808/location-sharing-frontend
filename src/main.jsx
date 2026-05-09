@@ -7,5 +7,5 @@ if (typeof global === "undefined") {
 }
 
 createRoot(document.getElementById('root')).render(
-    <div className='main'><App /></div>
+    <Div className='main'><App /></div>
 )
